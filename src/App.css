@@ -1787,52 +1787,129 @@ select {
 ========================================================= */
 
 @media print {
-  /* إخفاء العناصر غير الضرورية في الطباعة */
+  /* إعداد ورقة الطباعة: A4 عمودي واتجاه عربي */
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    direction: rtl !important;
+    background: #ffffff !important;
+  }
+
+  body {
+    margin: 0 !important;
+    color: #111827 !important;
+    font-size: 12pt;
+    line-height: 1.65;
+  }
+
+  /* إخفاء عناصر التنقل والتحكم غير اللازمة في النسخة المطبوعة */
   .header,
   .navigation,
   .appointments-toolbar,
   .patient-file-shortcuts,
+  .page-header,
+  .back-button,
+  .panel-title button,
+  .visit-form,
+  .prescription-form,
   .visit-actions,
   .prescription-actions,
   .add-medication-button,
-  .back-button,
   .logout,
-  button {
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
     display: none !important;
   }
 
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-    direction: rtl;
-  }
-
-  .content {
-    max-width: 100% !important;
-    padding: 0 !important;
+  /* إزالة تأثيرات الشاشة وتوسيط مساحة المحتوى على الورق */
+  .app,
+  .content,
+  .patient-file-page {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
     margin: 0 !important;
+    padding: 0 !important;
+    direction: rtl !important;
   }
 
-  /* تنسيق كروت الروشتات والزيارات للطباعة */
+  /* ألوان وحدود مناسبة للطباعة */
   .panel,
-  .visit-section,
+  .medical-card,
   .prescription-card,
   .patient-profile-header {
     box-shadow: none !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #cbd5e1 !important;
     background: #ffffff !important;
+    color: #111827 !important;
+    break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 20px !important;
+  }
+
+  .panel {
+    padding: 14px !important;
+    margin: 0 0 12px !important;
+  }
+
+  .medical-list,
+  .prescriptions-list {
+    display: block !important;
+  }
+
+  .medical-card,
+  .prescription-card {
+    margin: 0 0 10px !important;
+    padding: 12px !important;
   }
 
   .prescription-medication-card,
   .medication-details > div,
-  .info-box {
+  .info-box,
+  .visit-detail,
+  .selected-complaint,
+  .other-complaint-display {
     background: #ffffff !important;
-    border: 1px solid #ddd !important;
+    border-color: #cbd5e1 !important;
+    color: #111827 !important;
   }
 
-  /* إجبار إظهار الألوان الحقيقية للنصوص أثناء الطباعة */
+  .medical-card-grid,
+  .patient-info-grid,
+  .medication-details {
+    gap: 10px !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: #111827 !important;
+    page-break-after: avoid;
+  }
+
+  .medical-card-header,
+  .panel-title {
+    page-break-after: avoid;
+  }
+
+  /* منع العناوين من الانفصال عن المحتوى التالي */
+  .panel-title,
+  .medical-card-header,
+  .info-box,
+  .visit-detail,
+  .prescription-medication-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* إجبار المتصفح على احترام ألوان النص والخلفيات */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -1941,4 +2018,1779 @@ body.dark-theme .navigation button {
 body.dark-theme .navigation button:hover {
   background: #334155;
   color: #818cf8;
+}
+/* ```css
+/* =========================================================
+   FINAL MOBILE FORM VISIBILITY FIX
+   إصلاح نهائي لظهور القيم داخل نموذج الزيارة على Android/PWA
+========================================================= */
+
+.visit-form .form-field input,
+.visit-form .form-field textarea,
+.visit-form .form-field select {
+  box-sizing: border-box !important;
+  width: 100% !important;
+
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif !important;
+  font-weight: 500 !important;
+
+  caret-color: #111827 !important;
+
+  text-shadow: none !important;
+}
+
+/* =========================
+   SELECT — الطبيب
+========================= */
+
+.visit-form .form-field select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+
+  background-color: #ffffff !important;
+
+  padding: 12px 14px !important;
+
+  min-height: 46px !important;
+}
+
+/* النص داخل الخيارات */
+
+.visit-form .form-field select option {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* =========================
+   DATE — تاريخ الزيارة
+========================= */
+
+.visit-form .form-field input[type="date"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+
+  color-scheme: light !important;
+
+  min-height: 46px !important;
+  padding: 11px 12px !important;
+
+  caret-color: #111827 !important;
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.visit-form .form-field textarea {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  min-height: 100px !important;
+
+  padding: 12px 14px !important;
+
+  line-height: 1.7 !important;
+
+  caret-color: #111827 !important;
+
+  text-shadow: none !important;
+}
+
+/* =========================
+   INPUT العادي
+========================= */
+
+.visit-form .form-field input:not([type="date"]) {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  min-height: 46px !important;
+
+  caret-color: #111827 !important;
+}
+
+/* =========================
+   PLACEHOLDER
+========================= */
+
+.visit-form .form-field input::placeholder,
+.visit-form .form-field textarea::placeholder {
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .visit-form .form-field input,
+  .visit-form .form-field textarea,
+  .visit-form .form-field select {
+    color: #111827 !important;
+    -webkit-text-fill-color: #111827 !important;
+
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    font-size: 16px !important;
+    font-weight: 500 !important;
+
+    text-shadow: none !important;
+
+    caret-color: #111827 !important;
+  }
+
+  .visit-form .form-field textarea {
+    min-height: 105px !important;
+  }
+
+  .visit-form .form-field select {
+    min-height: 48px !important;
+  }
+
+  .visit-form .form-field input[type="date"] {
+    min-height: 48px !important;
+    color-scheme: light !important;
+  }
+}
+
+/* =========================
+   PRINT VISIT SUMMARY
+========================= */
+
+.print-button {
+  border: none;
+  border-radius: 10px;
+  padding: 9px 13px;
+  background: #e8f5f3;
+  color: #1f766e;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.print-button:hover {
+  background: #d8eeeb;
+}
+
+@media (max-width: 700px) {
+  .print-button {
+    width: 100%;
+  }
+}
+.items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+
+.items-grid .item {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.items-grid .item:nth-child(odd)::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -7px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: #dce5e8;
+}
+/* =========================
+   PRINT VISIT BUTTON
+========================= */
+
+.visit-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.print-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #6d5dfc;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.2s ease;
+}
+
+.print-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.print-button:active {
+  transform: translateY(0);
+}
+
+/* على الموبايل */
+@media (max-width: 600px) {
+  .visit-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .print-button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Final print action visibility and accessibility safeguards */
+.visit-actions {
+  position: relative;
+  z-index: 2;
+  display: flex !important;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.visit-actions .print-button {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  white-space: nowrap;
+}
+
+.visit-actions .print-button:focus-visible,
+.visit-actions .edit-button:focus-visible,
+.visit-actions .delete-button:focus-visible {
+  outline: 3px solid rgba(109, 93, 252, 0.35);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+ 
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+ 
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   حالات موعد جديدة: حضر / لم يحضر
+========================================================= */
+
+.status-attended {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.status-noshow {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   حالات موعد جديدة: حضر / لم يحضر
+========================================================= */
+
+.status-attended {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.status-noshow {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+/* =========================================================
+   التقويم الشهري / الأسبوعي (المواعيد)
+========================================================= */
+
+.calendar-panel {
+  overflow: hidden;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.calendar-nav strong {
+  min-width: 160px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: #8a8f9d;
+  font-weight: 700;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-cell {
+  min-height: 92px;
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell:hover {
+  border-color: #d9d4ff;
+  background: #fbfaff;
+}
+
+.calendar-cell-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+}
+
+.calendar-cell-muted {
+  background: #fafbfc;
+}
+
+.calendar-cell-muted .calendar-cell-date {
+  color: #c3c6cf;
+}
+
+.calendar-cell-today {
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-today .calendar-cell-date {
+  color: #6d5dfc;
+}
+
+.calendar-cell-selected {
+  background: #f0eeff;
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.calendar-chip {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f0eeff;
+  color: #5143d6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-chip-more {
+  font-size: 10px;
+  color: #8a8f9d;
+  padding: 2px 6px;
+}
+
+.calendar-day-details {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eceef3;
+}
+
+.calendar-day-details h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+}
+
+.calendar-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-week-day {
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 220px;
+  background: #fff;
+}
+
+.calendar-week-day-today {
+  border-color: #6d5dfc;
+  background: #fbfaff;
+}
+
+.calendar-week-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eceef3;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.calendar-week-day-header strong {
+  font-size: 16px;
+  color: #263238;
+}
+
+.calendar-week-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-chip-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.calendar-chip-block strong {
+  font-size: 11px;
+}
+
+.calendar-chip-block span {
+  font-size: 10px;
+}
+
+.calendar-week-empty {
+  margin: 0;
+  color: #c3c6cf;
+  font-size: 11px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media (max-width: 700px) {
+  .calendar-grid-header {
+    font-size: 10px;
+  }
+
+  .calendar-cell {
+    min-height: 64px;
+    padding: 4px;
+  }
+
+  .calendar-cell-chips {
+    display: none;
+  }
+
+  .calendar-week-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   حالات موعد جديدة: حضر / لم يحضر
+========================================================= */
+
+.status-attended {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.status-noshow {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+/* =========================================================
+   التقويم الشهري / الأسبوعي (المواعيد)
+========================================================= */
+
+.calendar-panel {
+  overflow: hidden;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.calendar-nav strong {
+  min-width: 160px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: #8a8f9d;
+  font-weight: 700;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-cell {
+  min-height: 92px;
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell:hover {
+  border-color: #d9d4ff;
+  background: #fbfaff;
+}
+
+.calendar-cell-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+}
+
+.calendar-cell-muted {
+  background: #fafbfc;
+}
+
+.calendar-cell-muted .calendar-cell-date {
+  color: #c3c6cf;
+}
+
+.calendar-cell-today {
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-today .calendar-cell-date {
+  color: #6d5dfc;
+}
+
+.calendar-cell-selected {
+  background: #f0eeff;
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.calendar-chip {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f0eeff;
+  color: #5143d6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-chip-more {
+  font-size: 10px;
+  color: #8a8f9d;
+  padding: 2px 6px;
+}
+
+.calendar-day-details {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eceef3;
+}
+
+.calendar-day-details h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+}
+
+.calendar-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-week-day {
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 220px;
+  background: #fff;
+}
+
+.calendar-week-day-today {
+  border-color: #6d5dfc;
+  background: #fbfaff;
+}
+
+.calendar-week-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eceef3;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.calendar-week-day-header strong {
+  font-size: 16px;
+  color: #263238;
+}
+
+.calendar-week-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-chip-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.calendar-chip-block strong {
+  font-size: 11px;
+}
+
+.calendar-chip-block span {
+  font-size: 10px;
+}
+
+.calendar-week-empty {
+  margin: 0;
+  color: #c3c6cf;
+  font-size: 11px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media (max-width: 700px) {
+  .calendar-grid-header {
+    font-size: 10px;
+  }
+
+  .calendar-cell {
+    min-height: 64px;
+    padding: 4px;
+  }
+
+  .calendar-cell-chips {
+    display: none;
+  }
+
+  .calendar-week-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   Dashboard: رسوم بيانية ومؤشر التغيّر الشهري
+========================================================= */
+
+.stat-card small {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stat-trend {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.simple-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simple-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+}
+
+.simple-bar-label {
+  font-size: 12px;
+  color: #4a5568;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.simple-bar-track {
+  height: 12px;
+  background: #f3f2ff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.simple-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.simple-bar-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+  text-align: left;
+  direction: ltr;
+}
+
+.simple-trend-chart {
+  width: 100%;
+  height: 130px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .simple-bar-row {
+    grid-template-columns: 80px 1fr 28px;
+  }
+
+  .simple-bar-label {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   حالات موعد جديدة: حضر / لم يحضر
+========================================================= */
+
+.status-attended {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.status-noshow {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+/* =========================================================
+   التقويم الشهري / الأسبوعي (المواعيد)
+========================================================= */
+
+.calendar-panel {
+  overflow: hidden;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.calendar-nav strong {
+  min-width: 160px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: #8a8f9d;
+  font-weight: 700;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-cell {
+  min-height: 92px;
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell:hover {
+  border-color: #d9d4ff;
+  background: #fbfaff;
+}
+
+.calendar-cell-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+}
+
+.calendar-cell-muted {
+  background: #fafbfc;
+}
+
+.calendar-cell-muted .calendar-cell-date {
+  color: #c3c6cf;
+}
+
+.calendar-cell-today {
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-today .calendar-cell-date {
+  color: #6d5dfc;
+}
+
+.calendar-cell-selected {
+  background: #f0eeff;
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.calendar-chip {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f0eeff;
+  color: #5143d6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-chip-more {
+  font-size: 10px;
+  color: #8a8f9d;
+  padding: 2px 6px;
+}
+
+.calendar-day-details {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eceef3;
+}
+
+.calendar-day-details h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+}
+
+.calendar-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-week-day {
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 220px;
+  background: #fff;
+}
+
+.calendar-week-day-today {
+  border-color: #6d5dfc;
+  background: #fbfaff;
+}
+
+.calendar-week-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eceef3;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.calendar-week-day-header strong {
+  font-size: 16px;
+  color: #263238;
+}
+
+.calendar-week-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-chip-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.calendar-chip-block strong {
+  font-size: 11px;
+}
+
+.calendar-chip-block span {
+  font-size: 10px;
+}
+
+.calendar-week-empty {
+  margin: 0;
+  color: #c3c6cf;
+  font-size: 11px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media (max-width: 700px) {
+  .calendar-grid-header {
+    font-size: 10px;
+  }
+
+  .calendar-cell {
+    min-height: 64px;
+    padding: 4px;
+  }
+
+  .calendar-cell-chips {
+    display: none;
+  }
+
+  .calendar-week-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   Dashboard: رسوم بيانية ومؤشر التغيّر الشهري
+========================================================= */
+
+.stat-card small {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stat-trend {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.simple-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simple-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+}
+
+.simple-bar-label {
+  font-size: 12px;
+  color: #4a5568;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.simple-bar-track {
+  height: 12px;
+  background: #f3f2ff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.simple-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.simple-bar-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+  text-align: left;
+  direction: ltr;
+}
+
+.simple-trend-chart {
+  width: 100%;
+  height: 130px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .simple-bar-row {
+    grid-template-columns: 80px 1fr 28px;
+  }
+
+  .simple-bar-label {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   الإشعارات (Notifications Bell)
+========================================================= */
+
+.notifications-wrapper {
+  position: relative;
+}
+
+.notifications-bell {
+  position: relative;
+}
+
+.notifications-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: #d64545;
+  color: white;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 320px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #eceef3;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(20, 25, 70, 0.15);
+  z-index: 50;
+  padding: 10px;
+}
+
+.notifications-dropdown-title {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 8px 10px;
+  border-bottom: 1px solid #eceef3;
+  margin-bottom: 6px;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: transparent;
+  padding: 9px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #343746;
+  line-height: 1.6;
+}
+
+.notification-item:hover {
+  background: #f9f8ff;
+}
+
+.notification-icon {
+  flex: 0 0 auto;
+  font-size: 15px;
+}
+
+body.dark-theme .notifications-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .notification-item {
+  color: #e2e8f0;
+}
+
+body.dark-theme .notification-item:hover {
+  background: #334155;
+}
+
+@media (max-width: 700px) {
+  .notifications-dropdown {
+    width: 260px;
+    left: -70px;
+  }
+}
+
+/* =========================================================
+   PATIENT FILE NUMBER (أضف هذا في نهاية ملف App.css)
+========================================================= */
+
+.patient-file-number {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #eeeafe;
+  color: #5143d6;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.patient-file-number-line {
+  margin: 0;
+  color: #8a8f9d;
+  font-size: 13px;
+  direction: ltr;
+  text-align: right;
+}
+
+/* =========================================================
+   حالات موعد جديدة: حضر / لم يحضر
+========================================================= */
+
+.status-attended {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.status-noshow {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+/* =========================================================
+   التقويم الشهري / الأسبوعي (المواعيد)
+========================================================= */
+
+.calendar-panel {
+  overflow: hidden;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.calendar-nav strong {
+  min-width: 160px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: #8a8f9d;
+  font-weight: 700;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-cell {
+  min-height: 92px;
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 6px;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calendar-cell:hover {
+  border-color: #d9d4ff;
+  background: #fbfaff;
+}
+
+.calendar-cell-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+}
+
+.calendar-cell-muted {
+  background: #fafbfc;
+}
+
+.calendar-cell-muted .calendar-cell-date {
+  color: #c3c6cf;
+}
+
+.calendar-cell-today {
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-today .calendar-cell-date {
+  color: #6d5dfc;
+}
+
+.calendar-cell-selected {
+  background: #f0eeff;
+  border-color: #6d5dfc;
+}
+
+.calendar-cell-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.calendar-chip {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f0eeff;
+  color: #5143d6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-chip-more {
+  font-size: 10px;
+  color: #8a8f9d;
+  padding: 2px 6px;
+}
+
+.calendar-day-details {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eceef3;
+}
+
+.calendar-day-details h3 {
+  margin: 0 0 14px;
+  font-size: 15px;
+}
+
+.calendar-week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-week-day {
+  border: 1px solid #eceef3;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 220px;
+  background: #fff;
+}
+
+.calendar-week-day-today {
+  border-color: #6d5dfc;
+  background: #fbfaff;
+}
+
+.calendar-week-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eceef3;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.calendar-week-day-header strong {
+  font-size: 16px;
+  color: #263238;
+}
+
+.calendar-week-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-chip-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.calendar-chip-block strong {
+  font-size: 11px;
+}
+
+.calendar-chip-block span {
+  font-size: 10px;
+}
+
+.calendar-week-empty {
+  margin: 0;
+  color: #c3c6cf;
+  font-size: 11px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media (max-width: 700px) {
+  .calendar-grid-header {
+    font-size: 10px;
+  }
+
+  .calendar-cell {
+    min-height: 64px;
+    padding: 4px;
+  }
+
+  .calendar-cell-chips {
+    display: none;
+  }
+
+  .calendar-week-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   Dashboard: رسوم بيانية ومؤشر التغيّر الشهري
+========================================================= */
+
+.stat-card small {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stat-trend {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8a8f9d;
+}
+
+.simple-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.simple-bar-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+}
+
+.simple-bar-label {
+  font-size: 12px;
+  color: #4a5568;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.simple-bar-track {
+  height: 12px;
+  background: #f3f2ff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.simple-bar-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.simple-bar-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #343746;
+  text-align: left;
+  direction: ltr;
+}
+
+.simple-trend-chart {
+  width: 100%;
+  height: 130px;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .simple-bar-row {
+    grid-template-columns: 80px 1fr 28px;
+  }
+
+  .simple-bar-label {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   الإشعارات (Notifications Bell)
+========================================================= */
+
+.notifications-wrapper {
+  position: relative;
+}
+
+.notifications-bell {
+  position: relative;
+}
+
+.notifications-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: #d64545;
+  color: white;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 320px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #eceef3;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(20, 25, 70, 0.15);
+  z-index: 50;
+  padding: 10px;
+}
+
+.notifications-dropdown-title {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 8px 10px;
+  border-bottom: 1px solid #eceef3;
+  margin-bottom: 6px;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: transparent;
+  padding: 9px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #343746;
+  line-height: 1.6;
+}
+
+.notification-item:hover {
+  background: #f9f8ff;
+}
+
+.notification-icon {
+  flex: 0 0 auto;
+  font-size: 15px;
+}
+
+body.dark-theme .notifications-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-theme .notification-item {
+  color: #e2e8f0;
+}
+
+body.dark-theme .notification-item:hover {
+  background: #334155;
+}
+
+@media (max-width: 700px) {
+  .notifications-dropdown {
+    width: 260px;
+    left: -70px;
+  }
+}
+
+/* =========================================================
+   ترقيم الصفحات (Pagination) - صفحة المرضى
+========================================================= */
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #eceef3;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: #656a78;
+  min-width: 100px;
+  text-align: center;
+}
+
+body.dark-theme .pagination-controls {
+  border-color: #334155;
 }
